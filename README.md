@@ -1,2 +1,2 @@
-# CS1
-Portfolio of programs created in CS 1 in high school. 
+# Comp Sci in High School 
+Portfolio of programs created in high school. 
