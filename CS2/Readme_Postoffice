@@ -1,0 +1,11 @@
+The user enters the Height, Length, Thickness, and the zip codes they are sending from and going to
+The code will return the price of the box to ship it
+
+If the user enters a zipcode that is too high or the deminsions that is not right size then it will exist the code
+
+Sample Inputs and Outputs 
+4, 4, .009, 02893, 08516 =.23
+2. 5, 7, .013, 07245, 45216 = .43
+3. 5, 7, .2, 45216, 07245 =.45
+4. 10, 12, .4, 15623, 89175 =.80
+5. 10, 12, 30, 21505, 72400 =4.65
