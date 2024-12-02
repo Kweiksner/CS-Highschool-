@@ -193,7 +193,7 @@ def main ():
         while True:
             play_again = str.lower(input("Would you like to play again"))
             if play_again == "no":
-                sys(exit)
+                exit()
             elif play_again == "yes":
                 break  
             else: 
