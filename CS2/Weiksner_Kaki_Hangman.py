@@ -15,10 +15,10 @@ Play again
 
 '''
 import random
-
+import sys
 
 def diagram(lives): 
-    if lives == 7: 
+    if lives == 6: 
         print(''''
                 +---+
                 |   |
@@ -26,16 +26,6 @@ def diagram(lives):
                     |
                     |
                     |
-              =======          
-                ''')
-    if lives == 6:
-        print(''''
-                +---+
-                |   |
-                o   |
-              / | \ |
-                |   |
-              /   \ |
               =======          
                 ''')
     if lives == 5:
@@ -53,7 +43,7 @@ def diagram(lives):
                 +---+
                 |   |
                 o   |
-                  \ |
+                 \  |
                     |
                     |
               =======          
@@ -63,7 +53,7 @@ def diagram(lives):
                 +---+
                 |   |
                 o   |
-              /   \ |
+               / \  |
                     |
                     |
               =======          
@@ -85,23 +75,29 @@ def diagram(lives):
                 o   |
               / | \ |
                 |   |
-              /     |
+               /    |
               =======          
                 ''')
-    if lives == 0: 
+    if lives == 0:
         print(''''
                 +---+
                 |   |
                 o   |
               / | \ |
                 |   |
-              /   \ |
+               / \  |
               =======          
                 ''')
+
     else:
         print()
     
-    
+def check_win(guessed_word): 
+
+    for i in range(len(guessed_word)):
+        if guessed_word[i] == "/":
+            return True
+
 def check_guess(guessed_correctly,word, guess):
     new_list = []
     for i in range(len(word)): 
@@ -113,17 +109,18 @@ def check_guess(guessed_correctly,word, guess):
             if letter in guessed_correctly:
                 new_list.append(letter)
             else:
-                new_list.append("_")
+                new_list.append("/")
     return new_list
  
             
                       
 
 def main():
+    guessed_letters = []
     play_again = "yes"
     while play_again == "yes": 
         guessed_correctly = []
-        lives = 7 
+        lives = 6 
         word = ["kaki"]
         print("Welcome to Hangman")
         print(diagram(lives))
@@ -136,24 +133,36 @@ def main():
                 if guess.isalpha():
                         go = 1
                 else:
-                    lives -= 1
                     print("You did not enter a letter")
-            if guess not in word: 
+            
+            if guess in guessed_letters: 
+                print("you already guessed that letter")
+            elif guess not in word: 
                 print("letter is not in word")
+                lives -= 1
+                print(diagram(lives))
+                guessed_letters.append(guess)
             else: 
-                letters_guessed = check_guess(guessed_correctly,word,guess)
-                print(letters_guessed)
-            print(diagram(lives))
+                guessed_word = check_guess(guessed_correctly,word,guess)
+                print(diagram(lives))
+                print(guessed_word)
+        
+                if check_win(guessed_word):
+                    continue
+                else:
+                    lives = 0
+
             print(f"You have {lives} left")
         play_again = str.lower(input("Would you like to play agin"))
+        
         while True:
             if play_again == "no": 
                 print("Have a good day")
+                sys.exit()
             elif play_again == "yes":
-                continue
+                break
             else: 
                 print("Enter Yes or no")
-                break
 
 
             
