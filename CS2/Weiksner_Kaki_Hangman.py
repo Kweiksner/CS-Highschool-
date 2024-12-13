@@ -16,6 +16,7 @@ Play again
 '''
 import random
 import sys
+import requests as rq
 
 def diagram(lives): 
     if lives == 6: 
@@ -28,7 +29,7 @@ def diagram(lives):
                     |
               =======          
                 ''')
-    if lives == 5:
+    elif lives == 5:
         print(''''
                 +---+
                 |   |
@@ -38,7 +39,7 @@ def diagram(lives):
                     |
               =======          
                 ''')
-    if lives == 4:
+    elif lives == 4:
         print(''''
                 +---+
                 |   |
@@ -48,7 +49,7 @@ def diagram(lives):
                     |
               =======          
                 ''')
-    if lives == 3:
+    elif lives == 3:
         print(''''
                 +---+
                 |   |
@@ -58,7 +59,7 @@ def diagram(lives):
                     |
               =======          
                 ''')
-    if lives == 2:
+    elif lives == 2:
         print(''''
                 +---+
                 |   |
@@ -68,7 +69,7 @@ def diagram(lives):
                     |
               =======          
                 ''')
-    if lives == 1:
+    elif lives == 1:
         print(''''
                 +---+
                 |   |
@@ -78,7 +79,7 @@ def diagram(lives):
                /    |
               =======          
                 ''')
-    if lives == 0:
+    elif lives == 0:
         print(''''
                 +---+
                 |   |
@@ -118,20 +119,36 @@ def check_guess(guessed_correctly,word, guess):
 def main():
     guessed_letters = []
     play_again = "yes"
+    alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","y","x","y","z"]
     while play_again == "yes": 
         guessed_correctly = []
         lives = 6 
-        word = ["kaki"]
         print("Welcome to Hangman")
-        print(diagram(lives))
-        word = random.choice(word)
+        diagram(lives)
+
+        while True:
+            players = str.lower(input("How many players would you like to play against the computer"))
+            if players == "no": 
+                word = str.lower(input("player one enter word"))
+                for i in range(40):
+                    print()
+                break
+            elif players == "yes":
+                url = 'https://www.mit.edu/~ecprice/wordlist.10000'
+                word_list = rq.get(url).text.split()
+                word = random.choice(word_list)
+                break
+            else:
+                print("Enter Yes or No")
 
         while lives > 0: #loop for everything
             go = 0 
             while go == 0: #loop to make sure that user entered a letter
-                guess = input("Guess a letter: ")
-                if guess.isalpha():
-                        go = 1
+                guess = str.lower(input("Guess a letter: "))
+                if guess in alphabet:
+                    go = 1
+                #if guess(len(range)) == 1:
+                    #go =1
                 else:
                     print("You did not enter a letter")
             
@@ -143,9 +160,11 @@ def main():
                 print(diagram(lives))
                 guessed_letters.append(guess)
             else: 
+                guessed_letters.append(guess)
                 guessed_word = check_guess(guessed_correctly,word,guess)
                 print(diagram(lives))
                 print(guessed_word)
+                print(lives)
         
                 if check_win(guessed_word):
                     continue
@@ -153,9 +172,10 @@ def main():
                     lives = 0
 
             print(f"You have {lives} left")
-        play_again = str.lower(input("Would you like to play agin"))
+        print(f"the word is {word}")
         
         while True:
+            play_again = str.lower(input("Would you like to play agin"))
             if play_again == "no": 
                 print("Have a good day")
                 sys.exit()
