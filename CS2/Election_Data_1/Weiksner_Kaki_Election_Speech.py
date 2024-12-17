@@ -20,42 +20,35 @@ bad_words= ["for", "to", "as","my", "you", "being", "an", "me", "and", "so", "ve
   
 
 def frequency_piechart(csvname, fhand): 
-    """
-    Args: 
-        cvsname(str): The name of the csv file 
-        fhand(str): The name of the file that the user wants the data from 
-    Void: 
-        Returns Nothing 
-        
-    """
-     #allows each word to be seen as different words
-    counts = dict()
-    for line in fhand:
-        line = line.rstrip()                                                          
-        line = line.translate(line.maketrans("", "", string.punctuation))               
-        line = line.lower()                     
-        words = line.split()                                    
+        #allows each word to be seen as different words
+        counts = dict()
+        for line in fhand:
+            line = line.rstrip()                                                                                                                    
+            line = line.translate(line.maketrans("", "", string.punctuation))               
+            line = line.lower()                     
+            words = line.split()                                    
             
-        #counts the amount of times a word appears and disregards any word in the list of bad words 
-        for word in words:
-            if word not in bad_words:
-                if word not in counts:
-                    counts[word] = 1
-                else:
-                    counts[word] += 1
+            #counts the amount of times a word appears and disregards any word in the list bad words 
+            for word in words:                                          #goes through each word
+                if word not in bad_words:                               # if the word is not in bad words
+                    if word not in counts:                              #if the word has not been counted yet
+                        counts[word] = 1                                # adds words to counts and sets it to 1 
+                    else:
+                        counts[word] += 1                               #adds one to counts
 
         #sorts the dictionary 
         sorted_words = dict(sorted(counts.items(), key=lambda item: -item[1]))
 
-        #puts the top 10 frequently occuring words into a new dictionary 
-        sorted_dict = dict()
+        #puts the top 10 frequently occuring words into a new count 
+        sorted_dict = dict()                                        #creates a new dictionary 
         count = 0
-        for i in sorted_words:
-            if count < 10:
-                sorted_dict[i] = sorted_words[i]
-                count += 1
+        for i in sorted_words:                                      # loop for the number of sorted words                  
+            if count < 10:                                          # when count is less than ten
+                sorted_dict[i] = sorted_words[i]                    #sets sorted dictionary to the same as the sorted words
+                count += 1                                          #adds one to count
             else:
                 break
+        print(sorted_dict)                              
 
 
         # writing to csv file
@@ -68,7 +61,7 @@ def frequency_piechart(csvname, fhand):
 
        #creates the plotly chart 
         axis('equal')
-        pie(sorted_dict.values(), labels=sorted_dict.keys())
+        pie(sorted_dict.values(), labels=sorted_dict.keys(), autopct='%1.1f%%')
         show()
     
 
