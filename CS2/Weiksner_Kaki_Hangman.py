@@ -24,7 +24,6 @@ Sources: Mr Cambell https://www.ef.edu/english-resources/english-vocabulary/top-
 
 import random
 import sys
-import requests as rq
 import os
 
 def diagram(lives): 
@@ -119,7 +118,7 @@ def check_win(guessed_word):
     """
     #checks to see if there is any / in the words
     for i in range(len(guessed_word)):
-        if guessed_word[i] == "/":
+        if guessed_word[i] == "_":
             return True
 
 def check_guess(guessed_correctly,word, guess):
@@ -142,7 +141,7 @@ def check_guess(guessed_correctly,word, guess):
             if letter in guessed_correctly:
                 new_list.append(letter)
             else:
-                new_list.append("/")
+                new_list.append("_")
     return new_list
  
             
@@ -151,22 +150,24 @@ def check_guess(guessed_correctly,word, guess):
 def main():
     play_again = "yes"                                                                              #sets play again to yes
     alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","y","x","y","z"]
+    print("Welcome to Hangman")
+
     while play_again == "yes":                                                                      #while the user still wants to play
         guessed_correctly = []                                                                      #creates a list for the letters they have guessed correctly
-        guessed_letters = []                                                                            #creates a list for the letters they have guessed 
+        guessed_letters = []                                                                         #creates a list for the letters they have guessed 
 
         lives = 6                                                                                    #sets lives to six
-        print("Welcome to Hangman")
-        diagram(lives)                                                                              #calls the board with one parameter
 
         while True:
-            players = str.lower(input("Would you like to play against the computer"))               #asks user if they want to play against the computer
+            players = str.lower(input("Would you like to play against the computer(Enter yes or no):"))               #asks user if they want to play against the computer
             
             if players == "no":                                                                     #if user wants to play against a friend
                 while True: 
-                    word = str.lower(input("player one enter word"))                                    #asks what their word is 
+                    print("You are playing two player mode")
+                    word = str.lower(input("player one enter word: "))                                    #asks what their word is 
                     if word.isalpha(): 
                         os.system('cls')
+                        guessed_word = (len(word)* "_")
                         break 
                     else: 
                         print("You must enter letters")
@@ -174,6 +175,7 @@ def main():
             
             #if user wants to play against computer 
             elif players == "yes":
+                print("You are playing against the computer")
                 word_list= []                                                                       #creates an empty list
                 fhand = open('Weiksner_Kaki_dictionary.txt')                                        #opens the dictionary 
                 #goes through each word and adds it to a list
@@ -181,6 +183,7 @@ def main():
                     word_list.append(word)
                 word = random.choice(word_list)                                                     #picks a random word 
                 word = word.strip()                                                                 #removes all extra spaces
+                guessed_word = (len(word)* "_")
                 break
             else:
                 print("Enter Yes or No")
@@ -188,9 +191,15 @@ def main():
         while lives > 0:                                                                    #loop for everything
             go = 0 
            
-            while go == 0:                                                                  #loop to make sure that user entered a letter
-                guess = str.lower(input("Guess a letter: "))                                #asks user to guess a letter
+            while go == 0:  
+                print()                                                                #loop to make sure that user entered a letter
+                diagram(lives)
+                print(f"You have {lives} lives left")
+                print(*guessed_word)
+                print(f" Letters Guessed:{', '.join(map(str, guessed_letters))}")
+                guess = str.lower(input("Guess a letter in the word: "))     #asks user to guess a letter
                 #checks if the letter is in the alphabet
+
                 if guess in alphabet:                                                       
                     go = 1
                 else:
@@ -202,28 +211,24 @@ def main():
             elif guess not in word: 
                 print("letter is not in word")
                 lives -= 1
-                print(diagram(lives))
                 guessed_letters.append(guess)                                                   #adds the letter to guess letters
             else: 
                 guessed_letters.append(guess)
                 guessed_word = check_guess(guessed_correctly,word,guess)                       
-                print(diagram(lives))
-                print(guessed_word)
-                print(lives)
-
 
                 #calls the function to see if they one
                 if check_win(guessed_word):
                     continue
                 else:
+                    print
+                    print("You Won!!")
                     lives = 0
 
-            print(f"You have {lives} left")
-        print(f"the word is {word}")
+        print(f"The Word is {word}")
         
         while True:
             #Asks user if they want to play again
-            play_again = str.lower(input("Would you like to play agin"))
+            play_again = str.lower(input("Would you like to play again(Enter yes or no): "))
             if play_again == "no": 
                 print("Have a good day")
                 sys.exit()                                                          #exsits the code
@@ -235,4 +240,3 @@ def main():
 
             
 main()
-
