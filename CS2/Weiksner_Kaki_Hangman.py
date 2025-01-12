@@ -222,9 +222,11 @@ def main():
                 else:
                     print
                     print("You Won!!")
-                    lives = 0
-
-        print(f"The Word is {word}")
+                    lives = -1
+        if lives == 0:
+            diagram(lives)
+            print("You lost")
+            print(f"The Word is {word}")
         
         while True:
             #Asks user if they want to play again
