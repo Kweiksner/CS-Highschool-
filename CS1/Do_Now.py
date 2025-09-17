@@ -16,4 +16,3 @@ def main():
     is_positive(str(3))
 main()
 
-print("hi")
