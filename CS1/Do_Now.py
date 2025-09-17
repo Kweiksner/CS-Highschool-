@@ -6,7 +6,7 @@ def is_positive(number):
     if number.isnumberic():
         return True
     else:
-        return Flase
+        return False
 
 def main():
     difference(3, 5)
