@@ -15,3 +15,5 @@ def main():
     is_positive("3")
     is_positive(str(3))
 main()
+
+print("hi")
