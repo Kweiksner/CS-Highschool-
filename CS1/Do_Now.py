@@ -16,3 +16,4 @@ def main():
     is_positive(str(3))
 main()
 
+print(0)
