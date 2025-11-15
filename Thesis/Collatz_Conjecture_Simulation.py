@@ -1,19 +1,19 @@
 import sys
 
-def even(number):
+def iseven(number):
     if number % 2 == 0:
         return("even")
     else:
         return("odd")
 
 def collatz(number):
-    while True:
-        if even(number) == "even": 
-            number = number/2
-            return(number)
-        elif even(number) == "odd":
-            number = number * 3 + 1
-            return(number)
+    even = iseven(number)
+    if even == "even": 
+        number = number/2
+        return(number)
+    elif even == "odd":
+        number = number * 3 + 1
+        return(number)
 
 def check_integer(number):
     try:
@@ -21,17 +21,18 @@ def check_integer(number):
     except ValueError:
         return "wrong input"
     return number
-    
+
 def main():
     iterations = 0 
     while True:
         number = input("Enter a postitive number:")
+        isinteger = check_integer(number)
         if number == "stop":
             sys.exit()
-        elif check_integer(number) == "wrong input":
+        elif isinteger == "wrong input":
             print("You did not enter a number")
         else:
-            number = check_integer(number)
+            number = isinteger
             break
     while number != 1:
         number= collatz(number)
@@ -39,3 +40,5 @@ def main():
     print(iterations)
 
 main()
+
+print("hi")
