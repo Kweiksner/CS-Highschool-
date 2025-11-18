@@ -22,10 +22,9 @@ def check_integer(number):
         return "wrong input"
     return number
 
-def main():
-    iterations = 0 
+def get_number():
     while True:
-        number = input("Enter a postitive number:")
+        number = input("Enter a postitive number (Enter stop to stop code):")
         isinteger = check_integer(number)
         if number == "stop":
             sys.exit()
@@ -33,12 +32,18 @@ def main():
             print("You did not enter a number")
         else:
             number = isinteger
-            break
+            return(number)
+
+def iterations():
+    iterations = 0 
+    number = get_number()
     while number != 1:
         number= collatz(number)
         iterations += 1
     print(iterations)
-
+            
+def main():
+    while True:
+        iterations()
 main()
 
-print("hi")
