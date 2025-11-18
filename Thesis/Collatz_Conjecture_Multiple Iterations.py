@@ -47,14 +47,14 @@ def iterations(data):
         number= collatz(number)
         iterations += 1
     print(iterations)
-    create_graph(data,ori_number, iterations)
-    return "hi"
+    new_dictionary = add_dictionary(data,ori_number, iterations)
+    create_graph(new_dictionary,ori_number, iterations)
+    return new_dictionary
 
-def create_graph(data_dict,number, iterations):
+def add_dictionary(data_dict,number, iterations):
     data_dict[number] = iterations
-    print(data_dict)
 
-    # Extract x and y values from the dictionary
+def create_graph(data_dict):
     numbers = list(data_dict.keys())      # x-axis values
     iterations = list(data_dict.values())  # y-axis values
 
@@ -67,7 +67,7 @@ def create_graph(data_dict,number, iterations):
     plt.ylabel('Iterations', fontsize=12)
     plt.title('Number vs Iterations', fontsize=14)
 
-    # Add grid for better readability
+    # Add grid 
     plt.grid(True, alpha=0.3)
 
     # Display the plot
@@ -75,13 +75,10 @@ def create_graph(data_dict,number, iterations):
 
 def main():
     data = {}
-
-    #fhand = open('kamala_new.txt', "r")                                              #opens the Kamala text file    
-    #kamala_csv = "kamala_speech.csv"                                            #opens the csv file
-    #create_graph(kamala_csv, fhand)                                       #calls the function with 2 parameters
-    #fhand = open('cleaned_trump_speech_transcript.txt')                         #opens the Trump text file 
-    #trump_name = "cleaned_trump_speech_transcript.csv"                          #opens the Trump csv file 
-    #create_graph(trump_name, fhand)        
+       
     while True:
         iterations(data)
 main()
+
+
+print("Hi")
