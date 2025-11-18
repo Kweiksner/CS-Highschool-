@@ -79,6 +79,3 @@ def main():
     while True:
         iterations(data)
 main()
-
-
-print("Hi")
