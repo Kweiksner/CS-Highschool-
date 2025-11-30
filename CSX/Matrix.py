@@ -1,10 +1,14 @@
 #next: try to make another class for the second matrix
+#document
 
 class matrix:
     def __init__(self, arr):
             self.matrix = arr
             self.rows = len(arr)
-            self.columns = len(arr[0]) if arr else 0 
+            if arr:
+                self.columns = len(arr[0])
+            else:
+                self.columns = 0
 
     def empty_matrix(self, row, col):
          empt_matrix = []
