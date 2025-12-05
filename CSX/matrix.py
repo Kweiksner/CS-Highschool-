@@ -26,14 +26,21 @@ class matrix:
         except ValueError:
             answer = "False"
             return answer
+    def float(number):
+        try:
+            number = float(number)
+            return number
+        except ValueError:
+            answer = "False"
+            return answer
     
     def create_matrix(self,row,col):
         new_answer = self.empty_matrix(row,col)
         for i in range(row):
             for j in range(col):
                 while True:
-                    number = input(f" Enter number row{i+1} and column{j+1}: ")
-                    number = matrix.integer(number)
+                    number = input(f" Enter number row{i+1} and column{j+1}: ")                        
+                    number = matrix.float(number)
                     if number != "False":
                         new_answer.matrix[i][j] = number
                         break
@@ -47,7 +54,7 @@ class matrix:
                 return "False"
              else:
                 return True
-        elif opp == 3:
+        elif opp == "3":
              if self.rows != col2 and self.columns != rows2:
                 return "False"
              else:
@@ -86,69 +93,72 @@ class matrix:
 
 def main():
     thing=0
+    opper =0
     while thing == 0:
-        operations = input("Would you like to add, subtract, multiply, or scalar multiply(Enter 1,2,3 or 4): ")
-        if operations != "1" and operations != "2" and operations != "3" and operations != "4":
-            print("Please enter a number(1-4)")
-        else:
-            rc=0
-            while rc == 0:
-                rows = input("How many rows are in your matrix?: ")
-                columms = input("How many comlumns are in your matrix: ")
-                rows = matrix.integer(rows)
-                columns = matrix.integer(columms)
-                if rows != "False" and columns != "False":
-                    rc=1
-                else:
-                    print("Enter numbers for your rows and columns")
-                    
-            print("Create your matrix")
-            tem_matrix = matrix([[]])
-            matrix_1 = tem_matrix.create_matrix(rows,columns)
-            print(matrix_1.matrix)
-
-            if operations == "1" or operations== "2" or operations =="3":
-                size=0
-                while size == 0:
-                    rc2=0
-                    print("Create your 2nd matrix")
-                    while rc2== 0:
-                        rows2 = input("How many rows are in your matrix?: ")
-                        columms2 = input("How many comlumns are in your matrix: ")
-                        rows2 = matrix.integer(rows2)
-                        columns2 = matrix.integer(columms2)
-                        if rows2 != "False" and columns2 != "False":
-                            rc2=1
-                        else:
-                            print("Enter numbers for your rows and columns")
-                    
-                    sizing = matrix_1.correct_size(rows2,columns2,operations)
-                    if sizing == "False":
-                        print("Please enter correct sizing for the operation you are trying to preform")
+        while opper == 0:
+            operations = input("Would you like to add, subtract, multiply, or scalar multiply(Enter 1,2,3 or 4): ")
+            if operations != "1" and operations != "2" and operations != "3" and operations != "4":
+                print("Please enter a number(1-4)")
+            else:
+                rc=0
+                while rc == 0:
+                    rows = input("How many rows are in your matrix?: ")
+                    columms = input("How many comlumns are in your matrix: ")
+                    rows = matrix.integer(rows)
+                    columns = matrix.integer(columms)
+                    if rows != "False" and columns != "False":
+                        rc=1
                     else:
-                        tem_matrix2 = matrix([[]])
-                        matrix_2 = tem_matrix2.create_matrix(rows,columns)
-                        print(matrix_2.matrix)
-                        size =1
-        if operations =="1": 
-            add_solution = matrix_1.add(matrix_2)
-            print(add_solution.matrix)
-        elif operations =="2":
-            sub_solution = matrix_1.subtract(matrix_2)
-            print(sub_solution.matrix)
-        elif operations =="3": 
-            mul_solution = matrix_1.multiply(matrix_2)
-            print(mul_solution.matrix)
-        elif operations =="4": 
-            while True:
-                times = input("How many times would you like to multiply you matrix by: ")
-                times = matrix.integer(times)
-                if times != "False":
-                    scl = matrix_1.scalar_times(times)
-                    print(scl.matrix)
-                    break
-                else: 
-                    print("Please enter a number")
+                        print("Enter numbers for your rows and columns")
+                        
+                print("Create your matrix")
+                tem_matrix = matrix([[]])
+                matrix_1 = tem_matrix.create_matrix(rows,columns)
+                print(matrix_1.matrix)
+
+                if operations == "1" or operations== "2" or operations =="3":
+                    size=0
+                    while size == 0:
+                        rc2=0
+                        print("Create your 2nd matrix")
+                        while rc2== 0:
+                            rows2 = input("How many rows are in your matrix?: ")
+                            columms2 = input("How many comlumns are in your matrix: ")
+                            rows2 = matrix.integer(rows2)
+                            columns2 = matrix.integer(columms2)
+                            if rows2 != "False" and columns2 != "False":
+                                rc2=1
+                            else:
+                                print("Enter numbers for your rows and columns")
+                        
+                        sizing = matrix_1.correct_size(rows2,columns2,operations)
+                        if sizing == "False":
+                            print("Please enter correct sizing for the operation you are trying to preform")
+                        else:
+                            tem_matrix2 = matrix([[]])
+                            matrix_2 = tem_matrix2.create_matrix(rows,columns)
+                            print(matrix_2.matrix)
+                            size =1
+                opper = 1
+            if operations =="1": 
+                add_solution = matrix_1.add(matrix_2)
+                print(add_solution.matrix)
+            elif operations =="2":
+                sub_solution = matrix_1.subtract(matrix_2)
+                print(sub_solution.matrix)
+            elif operations =="3": 
+                mul_solution = matrix_1.multiply(matrix_2)
+                print(mul_solution.matrix)
+            elif operations =="4": 
+                while True:
+                    times = input("How many times would you like to multiply you matrix by: ")
+                    times = matrix.integer(times)
+                    if times != "False":
+                        scl = matrix_1.scalar_times(times)
+                        print(scl.matrix)
+                        break
+                    else: 
+                        print("Please enter a number")
         thing =1
 
 main()
