@@ -1,12 +1,12 @@
 #next: try to make another class for the second matrix
 #document
-
+import sys
 class matrix:
     def __init__(self, arr):
             self.matrix = arr
-            self.rows = len(arr)
+            self.rows = int(len(arr))
             if arr:
-                self.columns = len(arr[0])
+                self.columns = int(len(arr[0]))
             else:
                 self.columns = 0
 
@@ -26,6 +26,7 @@ class matrix:
         except ValueError:
             answer = "False"
             return answer
+        
     def float(number):
         try:
             number = float(number)
@@ -33,6 +34,34 @@ class matrix:
         except ValueError:
             answer = "False"
             return answer
+        
+    def decimal(numb):
+        try:
+            if '/' in numb:
+                parts = numb.split('/')#splits number into 2 before and after the devided by symbol
+                if len(parts) == 2:
+                    numerator = float(parts[0])
+                    denominator = float(parts[1])
+                    if denominator != 0:
+                        return numerator / denominator
+                    else:
+                        return "False"
+            return int(numb)
+        except:
+            try:
+                return float(numb)
+            except:
+                return "False"
+            
+    def mat():
+        mat=0
+        while mat ==0:
+            numb_mat = input("How many matrics would you like to make")
+            numb_mat= matrix.integer(numb_mat)
+            if numb_mat == "False" or numb_mat<1 :
+                print("Please enter an integer larger than one")
+            else:
+                return numb_mat
     
     def create_matrix(self,row,col):
         new_answer = self.empty_matrix(row,col)
@@ -40,12 +69,12 @@ class matrix:
             for j in range(col):
                 while True:
                     number = input(f" Enter number row{i+1} and column{j+1}: ")                        
-                    number = matrix.float(number)
+                    number = matrix.decimal(number)
                     if number != "False":
                         new_answer.matrix[i][j] = number
                         break
                     else:
-                        print("You did not enter a number")
+                        print("You did not enter a number or fraction!")
         return new_answer
                     
     def correct_size(self,rows2,col2,opp):
@@ -61,19 +90,34 @@ class matrix:
                  return True 
         else:
             return "False"
-         
+    
+    def display(self):
+        for i in range(self.rows):
+            print("[ ", end='')
+            for j in range(self.columns):
+                print(self.matrix[i][j] , end=' ')
+            print("]")
+
+    def available_matrix(mlist):
+        print("Available matrices:")
+        for name, mat in mlist.items():
+            print()
+            print(f"{name} ({mat.rows}x{mat.columns}):")
+            mat.display()
+            print()
+
     def add(self, m2):
         answer = self.empty_matrix(self.rows, self.columns)
         for i in range(self.rows):
             for j in range(self.columns):
-                answer.matrix[i][j] = self.matrix[i][j] + m2.matrix[i][j]   
+                answer.matrix[i][j] = (self.matrix[i][j]) + (m2.matrix[i][j])#why is this just adding the two numbers like 1+2 becomes 12   
         return answer
     
     def subtract(self, m2):
         answer = self.empty_matrix(self.rows, self.columns)
         for i in range(self.rows):
             for j in range(self.columns):
-                answer.matrix[i][j] = self.matrix[i][j] - m2.matrix[i][j]
+                answer.matrix[i][j] = int(self.matrix[i][j]) - int(m2.matrix[i][j])
         return answer
     
     def multiply(self,m2):
@@ -92,73 +136,185 @@ class matrix:
         return answer
 
 def main():
-    thing=0
-    opper =0
-    while thing == 0:
-        while opper == 0:
-            operations = input("Would you like to add, subtract, multiply, or scalar multiply(Enter 1,2,3 or 4): ")
-            if operations != "1" and operations != "2" and operations != "3" and operations != "4":
-                print("Please enter a number(1-4)")
-            else:
-                rc=0
-                while rc == 0:
-                    rows = input("How many rows are in your matrix?: ")
-                    columms = input("How many comlumns are in your matrix: ")
-                    rows = matrix.integer(rows)
-                    columns = matrix.integer(columms)
-                    if rows != "False" and columns != "False":
-                        rc=1
-                    else:
-                        print("Enter numbers for your rows and columns")
-                        
-                print("Create your matrix")
-                tem_matrix = matrix([[]])
-                matrix_1 = tem_matrix.create_matrix(rows,columns)
-                print(matrix_1.matrix)
+    thing = 0
+    matrices = {}  # Dictionary to store all matrices by name
+    
+    while True:
+        print("MATRIX CALCULATOR")
+        print()
+        print("1. Create new matrix")
+        print("2. View all matrices")
+        print("3. Add two matrices")
+        print("4. Subtract two matrices")
+        print("5. Multiply two matrices")
+        print("6. Scalar multiplication")
+        print("7. Delete a matrix")
+        print("8. Exit")
+        print()
 
-                if operations == "1" or operations== "2" or operations =="3":
-                    size=0
-                    while size == 0:
-                        rc2=0
-                        print("Create your 2nd matrix")
-                        while rc2== 0:
-                            rows2 = input("How many rows are in your matrix?: ")
-                            columms2 = input("How many comlumns are in your matrix: ")
-                            rows2 = matrix.integer(rows2)
-                            columns2 = matrix.integer(columms2)
-                            if rows2 != "False" and columns2 != "False":
-                                rc2=1
-                            else:
-                                print("Enter numbers for your rows and columns")
-                        
-                        sizing = matrix_1.correct_size(rows2,columns2,operations)
-                        if sizing == "False":
-                            print("Please enter correct sizing for the operation you are trying to preform")
-                        else:
-                            tem_matrix2 = matrix([[]])
-                            matrix_2 = tem_matrix2.create_matrix(rows,columns)
-                            print(matrix_2.matrix)
-                            size =1
-                opper = 1
-            if operations =="1": 
-                add_solution = matrix_1.add(matrix_2)
-                print(add_solution.matrix)
-            elif operations =="2":
-                sub_solution = matrix_1.subtract(matrix_2)
-                print(sub_solution.matrix)
-            elif operations =="3": 
-                mul_solution = matrix_1.multiply(matrix_2)
-                print(mul_solution.matrix)
-            elif operations =="4": 
-                while True:
-                    times = input("How many times would you like to multiply you matrix by: ")
-                    times = matrix.integer(times)
-                    if times != "False":
-                        scl = matrix_1.scalar_times(times)
-                        print(scl.matrix)
-                        break
-                    else: 
-                        print("Please enter a number")
-        thing =1
+        thing = 0 
+        while thing ==0:
+            choice = input("Enter your choice (1-8): ")
+            if choice != "2" and choice != "1" and choice != "3" and choice != "4" and  choice != "5" and  choice != "6" and  choice != "7" and  choice != "8":
+                print("Please enter a number 1-8")
+            else:
+                thing =1
+
+        if choice == "1":
+            name = input("Enter a name for this matrix: ")
+            
+            while True:
+                rows = input("Enter number of rows: ")
+                rows = matrix.integer(rows)
+                if rows != "False" and rows > 0:
+                    break
+                print("Please enter a valid positive integer")
+            
+            while True:
+                cols = input("Enter number of columns: ")
+                cols = matrix.integer(cols)
+                if cols != "False" and cols > 0:
+                    break
+                print("Please enter a valid positive integer")
+            
+            temp = matrix([])
+            mat = temp.create_matrix(rows, cols)
+            matrices[name] = mat
+            print(f" Matrix '{name}' created successfully!")
+            mat.display()
+        
+        elif choice == "2":
+            if not matrices:
+                print("No matrices created yet")
+            else:
+                matrix.available_matrix(matrices)
+        
+        elif choice == "3" or choice == "4":
+            if len(matrices) < 2:
+                print("You need at least 2 matrices to perform addition or subtraction!")
+                names = 1
+                dem = 1
+            else:
+                names = 0 
+                dem = 0
+            
+            while names == 0:
+                matrix.available_matrix(matrices)
+                m1_name = input("Enter first matrix name: ")
+                m2_name = input("Enter second matrix name: ")
+                
+                if m1_name not in matrices or m2_name not in matrices:
+                    print("One or both matrix names not found!")
+                    continue
+                else:
+                    names =1 
+            
+            while dem == 0:
+                m1 = matrices[m1_name]
+                m2 = matrices[m2_name]
+                if m1.correct_size(m2.rows, m2.columns, "1") == "False":
+                    print("Matrices must have the same dimensions for addition or subtractions!")
+                    dem = 1
+                else:
+                    dem = 1
+            
+            if choice =="3":
+                result = m1.add(m2)
+                result_name = input("Enter name for result matrix: ")
+                matrices[result_name] = result
+                print(f"Result of {m1_name} + {m2_name}:")
+                result.display()
+            
+            else:
+                result = m1.subtract(m2)
+                result_name = input("Enter name for result matrix: ")
+                matrices[result_name] = result
+                print(f"Result of {m1_name} - {m2_name}:")
+                result.display()
+        
+        elif choice == "5":
+            if len(matrices) < 2:
+                print("You need at least 2 matrices to perform multiplication!")
+                names = 1
+            else:
+                names =0
+            
+            while names == 0:
+                matrix.available_matrix(matrices)
+                m1_name = input("Enter first matrix name: ")
+                m2_name = input("Enter second matrix name: ")
+                
+                if m1_name not in matrices or m2_name not in matrices:
+                    print("One or both matrix names not found!")
+                else: 
+                    names = 1 
+                    
+                
+            m1 = matrices[m1_name]
+            m2 = matrices[m2_name]
+            
+            if m1.correct_size(m2.rows, m2.columns, "3") == "False":
+                print(f"Cannot multiply: columns of first matrix ({m1.columns}) must equal rows of second matrix ({m2.rows})!")
+            else:
+                result = m1.multiply(m2)
+                result_name = input("Enter name for result matrix: ")
+                matrices[result_name] = result
+                print(f"Result of {m1_name} × {m2_name}:")
+                result.display()
+        
+        elif choice == "6":
+            if not matrices:
+                print("You need at least 1 matrix for Scalar Multiplication!")
+                scal_right = 1
+                name_right = 1
+            else:
+                name_right = 0
+            
+            while name_right ==0:
+                matrix.available_matrix(matrices)
+                mat_name = input("Enter matrix name: ")
+                if mat_name not in matrices:
+                    print("Matrix not found! Enter a matrix you have already created")
+                else:
+                    name_right = 1
+                    scal_right = 0 
+            
+            while scal_right == 0:
+                scalar = input("Enter multiplication value: ")
+                scalar = matrix.float(scalar)
+                if scalar != "False":
+                    break
+                print("Please enter a valid number")
+            
+            result = matrices[mat_name].scalar_times(scalar)
+            rname = input("Enter name for result matrix: ")
+            matrices[rname] = result
+            print(f"Result of {scalar} × {mat_name}:")
+            result.display()
+        
+        elif choice == "7":
+            if not matrices:
+                print("No matrices to delete!")
+                name_right = 1
+            else:
+                name_right = 0 
+            
+            while name_right ==0:
+                matrix.available_matrix(matrices)
+                name = input("Enter matrix name to delete: ")
+                
+                if name in matrices:
+                    del matrices[name]
+                    print(f"Matrix '{name}' deleted successfully!")
+                    name_right = 1
+                else:
+                    print("Matrix not found, pick another one!")
+        
+        elif choice == "8":
+            print("Thank you for using Matrix Calculator!")
+            sys.exit()
+
+        else:
+            print("Invalid choice! Please enter a number between 1 and 8.")
 
 main()
