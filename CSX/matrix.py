@@ -1,5 +1,7 @@
-#next: try to make another class for the second matrix
-#document
+#question:How to make sure that my decimals are not so long
+#how do i make my matrix lines line up
+
+
 import sys
 class matrix:
     def __init__(self, arr):
@@ -27,7 +29,7 @@ class matrix:
             answer = "False"
             return answer
         
-    def float(number):
+    def floats(number):
         try:
             number = float(number)
             return number
@@ -38,18 +40,18 @@ class matrix:
     def decimal(numb):
         try:
             if '/' in numb:
-                parts = numb.split('/')#splits number into 2 before and after the devided by symbol
-                if len(parts) == 2:
-                    numerator = float(parts[0])
-                    denominator = float(parts[1])
-                    if denominator != 0:
-                        return numerator / denominator
+                split_nu = numb.split('/')                                  #splits number into 2 before and after the devided by symbol
+                if len(split_nu) == 2:
+                    numer = float(split_nu[0])
+                    denom= float(split_nu[1])
+                    if denom != 0:
+                        return numer / denom
                     else:
                         return "False"
-            return int(numb)
+            return int(numb)                                                # if there is not divide by sign, then return a integer
         except:
             try:
-                return float(numb)
+                return float(numb)                                          # returns a float if number is not an integer
             except:
                 return "False"
             
@@ -134,6 +136,9 @@ class matrix:
             for j in range(self.columns):
                 answer.matrix[i][j] = number *self.matrix[i][j]
         return answer
+    
+    def switch_rows(self,r1,r2):
+        self.matrix[r1-1], self.matrix[r2-1] = self.matrix[r2-1], self.matrix[r1-1]
 
 def main():
     thing = 0
@@ -148,13 +153,17 @@ def main():
         print("4. Subtract two matrices")
         print("5. Multiply two matrices")
         print("6. Scalar multiplication")
-        print("7. Delete a matrix")
-        print("8. Exit")
+        print("7. Switch Rows")
+        print("8. Combine Rows")
+        print("9. Reduce matrix")
+        print("10. Invert Matrix")
+        print("11. Delete a matrix")
+        print("12. Exit")
         print()
 
         thing = 0 
         while thing ==0:
-            choice = input("Enter your choice (1-8): ")
+            choice = input("Enter your choice (1-12): ")
             if choice != "2" and choice != "1" and choice != "3" and choice != "4" and  choice != "5" and  choice != "6" and  choice != "7" and  choice != "8":
                 print("Please enter a number 1-8")
             else:
@@ -205,7 +214,6 @@ def main():
                 
                 if m1_name not in matrices or m2_name not in matrices:
                     print("One or both matrix names not found!")
-                    continue
                 else:
                     names =1 
             
@@ -249,7 +257,6 @@ def main():
                 else: 
                     names = 1 
                     
-                
             m1 = matrices[m1_name]
             m2 = matrices[m2_name]
             
@@ -281,7 +288,7 @@ def main():
             
             while scal_right == 0:
                 scalar = input("Enter multiplication value: ")
-                scalar = matrix.float(scalar)
+                scalar = matrix.floats(scalar)
                 if scalar != "False":
                     break
                 print("Please enter a valid number")
@@ -291,8 +298,44 @@ def main():
             matrices[rname] = result
             print(f"Result of {scalar} × {mat_name}:")
             result.display()
-        
+       
         elif choice == "7":
+            if not matrices:
+                print("No matrices to switch rows!")
+                name_right = 1
+                correct_row =1 
+            else:
+                name_right = 0 
+
+            while name_right == 0:
+                matrix.available_matrix(matrices)
+                name = input("Enter matrix name to switch to rows: ")
+
+                if name in matrices:
+                    m1 = matrices[name]
+                    correct_row = 0
+                    name_right= 1
+                else:
+                    print("Matrix not found, pick another one!")
+                    
+            while correct_row == 0:
+                r1 = input("Enter first row: ")
+                r2 = input("Enter second row: ")
+                r1 = matrix.integer(r1)
+                r2 = matrix.integer(r2)
+
+                if r1 != "False" and r2!= "Flalse" and r1 > 0 and r2 >0 and r1!= r2:
+                    if r1 <= m1.rows and r2 <= m1.rows:
+                        m1.switch_rows(r1,r2)
+                        print(f"{r1} and {r2} switched succsessfully ")
+                        m1.display()
+                        correct_row = 1
+                    else:
+                        print(f"Enter a number between 1 and {m1.rows}")
+                else:
+                    print("Please enter a 2 different positive integers")
+    
+        elif choice == "11":
             if not matrices:
                 print("No matrices to delete!")
                 name_right = 1
@@ -310,7 +353,7 @@ def main():
                 else:
                     print("Matrix not found, pick another one!")
         
-        elif choice == "8":
+        elif choice == "12":
             print("Thank you for using Matrix Calculator!")
             sys.exit()
 
