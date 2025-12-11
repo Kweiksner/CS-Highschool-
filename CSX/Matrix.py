@@ -1,7 +1,6 @@
 #question:How to make sure that my decimals are not so long
 #how do i make my matrix lines line up
 
-
 import sys
 class matrix:
     def __init__(self, arr):
@@ -112,7 +111,7 @@ class matrix:
         answer = self.empty_matrix(self.rows, self.columns)
         for i in range(self.rows):
             for j in range(self.columns):
-                answer.matrix[i][j] = (self.matrix[i][j]) + (m2.matrix[i][j])#why is this just adding the two numbers like 1+2 becomes 12   
+                answer.matrix[i][j] = (self.matrix[i][j]) + (m2.matrix[i][j])#why is this just adding the two numbers like 1+2 becomes 12 is this still the case?  
         return answer
     
     def subtract(self, m2):
@@ -334,6 +333,18 @@ def main():
                         print(f"Enter a number between 1 and {m1.rows}")
                 else:
                     print("Please enter a 2 different positive integers")
+        elif choice == "8": 
+            if not matrices:
+                print("No matrices to delete!")
+                name_right = 1
+            else:
+                name_right = 0 
+            
+            while name_right == 0:
+                matrix.available_matrix(matrices)
+                name = input("Enter matrix to combine rows: ")
+
+                if name
     
         elif choice == "11":
             if not matrices:

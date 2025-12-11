@@ -1,9 +1,7 @@
 import sys
-#imports files from my computer 
-import string 
-import csv
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 def iseven(number):
     if number % 2 == 0:
@@ -24,12 +22,12 @@ def check_integer(number):
     try:
         number = int(number)
     except ValueError:
-        return "wrong input"
+        return "False"
     return number
 
 def get_number():
     while True:
-        number = input("Enter a postitive number (Enter stop to stop code):")
+        number = input("Enter a multiple (Enter stop to stop code):")
         isinteger = check_integer(number)
         if number == "stop":
             sys.exit()
@@ -44,15 +42,16 @@ def iterations(data):
     ori_number = get_number()
     number = ori_number
     while number != 1:
-        number= collatz(number)
+        number = collatz(number)
         iterations += 1
     print(iterations)
-    new_dictionary = add_dictionary(data,ori_number, iterations)
-    create_graph(new_dictionary,ori_number, iterations)
+    new_dictionary = add_dictionary(data, ori_number, iterations)
+    create_graph(new_dictionary)  # Remove the extra parameters here
     return new_dictionary
 
 def add_dictionary(data_dict,number, iterations):
     data_dict[number] = iterations
+    return data_dict
 
 def create_graph(data_dict):
     numbers = list(data_dict.keys())      # x-axis values
@@ -75,7 +74,25 @@ def create_graph(data_dict):
 
 def main():
     data = {}
-       
     while True:
-        iterations(data)
+        multiple = input("Enter multiple:")
+        multiple = check_integer(multiple)
+        if multiple == "False":
+            print("Enter a multiple")
+        else:
+            break
+
+    for number in range(multiple, multiple *1000 +1): 
+        iterations = 0
+        ori_number = number
+        iterations_count = 0
+        number = collatz(number)
+        while number != 1:
+            number = collatz(number)
+            iterations += 1
+        add_dictionary(data, ori_number, iterations)
+    
+    print(f"{ori_number}: {iterations_count} iterations")
+    
+    create_graph(data)
 main()
