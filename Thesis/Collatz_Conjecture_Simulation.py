@@ -10,9 +10,11 @@ def collatz(number):
     even = iseven(number)
     if even == "even": 
         number = number/2
+        print(number)
         return(number)
     elif even == "odd":
         number = number * 3 + 1
+        print(number)
         return(number)
 
 def check_integer(number):

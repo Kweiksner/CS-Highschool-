@@ -1,13 +1,4 @@
 
-
-def convert_tobase10(number):
-    new_numb = int(number,16)
-    return new_numb
-
-def convert_tobase16(number):
-    new_numb = hex(number)[2: ].upper()
-    return new_numb
-    
     
 def findCreature(input1, input2, input3):
     locations = []
@@ -46,13 +37,13 @@ def findCreature(input1, input2, input3):
         option2.append(column)
     
     input_1_row = rows[0]
-    i1r = convert_tobase10(input_1_row)
+    i1r = int(input_1_row,16)
     input_1_col = columns[0]
-    i1c = convert_tobase10(input_1_col)
+    i1c = int(input_1_col,16)
     input_1_opt_1 = option1[0]
-    i101 = convert_tobase10(input_1_opt_1)
+    i101 = int(input_1_opt_1,16)
     input_1_opt_2 = option2[0]
-    i102 = convert_tobase10(input_1_opt_2)
+    i102 = int(input_1_opt_2,16)
 
     R11 = str(i1r + i102)
     R12 = str(i1r + i101)
@@ -73,13 +64,13 @@ def findCreature(input1, input2, input3):
     input1_possiblites.append((R14, C13))
     
     input_2_row = rows[1]
-    i2r = convert_tobase10(input_2_row)
+    i2r = int(input_2_row,16)
     input_2_col = columns[1]
-    i2c = convert_tobase10(input_2_col)
+    i2c = int(input_2_col,16)
     input_2_opt_1 = option1[1]
-    i201 = convert_tobase10(input_2_opt_1)
+    i201 = int(input_2_opt_1,16)
     input_2_opt_2 = option2[1]
-    i202 = convert_tobase10(input_2_opt_2)
+    i202 = int(input_2_opt_2,16)
 
     R21 = str(i2r + i202)
     R22 = str(i2r + i201)
@@ -100,13 +91,13 @@ def findCreature(input1, input2, input3):
     input2_possiblites.append((R24, C23))
 
     input_3_row = rows[2]
-    i3r = convert_tobase10(input_3_row)
+    i3r = int(input_3_row,16)
     input_3_col = columns[2]
-    i3c = convert_tobase10(input_3_col)
+    i3c = int(input_3_col,16)
     input_3_opt_1 = option1[2]
-    i301 = convert_tobase10(input_3_opt_1)
+    i301 = int(input_3_opt_1,16)
     input_3_opt_2 = option2[2]
-    i302 = convert_tobase10(input_3_opt_2)
+    i302 = int(input_3_opt_2,16)
 
     
     R31 = str(i3r + i302)
@@ -134,8 +125,8 @@ def findCreature(input1, input2, input3):
                 for k in range(len(input3_possiblites)):
                     if input3_possiblites[k] == input1_possiblites[i] and input2_possiblites[j] == input3_possiblites[k]:
                         arow, acol = input1_possiblites[i]
-                        hrow = convert_tobase16(int(arow))
-                        hcol = convert_tobase16(int(acol))
+                        hrow = hex(int(arow))[2: ].upper()
+                        hcol = hex(int(acol))[2: ].upper()
 
                         if len(hrow) == 1:
                             hrow = "0" + hrow
