@@ -122,7 +122,7 @@ def one_multiple():
         else:
             break
 
-    for number in range(multiple, multiple*1000+1, multiple):                  #goes through the first 1000 multiples
+    for number in range(multiple, multiple*100000+1, multiple):                  #goes through the first 1000 multiples
         iterations = 0
         ori_number = number
         number = collatz(number)
