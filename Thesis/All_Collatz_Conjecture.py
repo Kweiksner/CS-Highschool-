@@ -148,7 +148,7 @@ def one_multiple():
     r_2, r_value = r_squared(x,y)
     
     print()
-    print(f"Iterations Statistics for{multiple}")
+    print(f"Iterations Statistics for {multiple}")
     print(f"Mean: {mean} ")
     print(f"Median: {median} ")
     print(f"Range: {rang} ")
@@ -409,7 +409,7 @@ def get_range(data):
     #gets the highest and the lowest iteration count and subtracts them 
     first_value = list(data.values())[0]
     last_value = list(data.values())[-1]
-    rang = last_value - first_value
+    rang =  list(data.values())[0]-  list(data.values())[-1]
     return rang
 
 def r_squared(x,y):
