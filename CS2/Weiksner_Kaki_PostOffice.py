@@ -1,6 +1,6 @@
 ''' 
     flowerpot
-    Name: Kaki Weiksner 
+    Name: Kaki Weiksner gordon
     Description: Determines the size of the box, and how much it will cost 
     Bugs: There are no bugs that I have found 
     Features: None
